@@ -125,9 +125,11 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.getValue() == null){
-                                                String email = username.getText().toString();
+                                                String email = mAuth.getCurrentUser().getEmail();
+                                                String uid = mAuth.getCurrentUser().getUid();
                                                 Intent intent = new Intent(MainActivity.this, UpdateProfile.class);
                                                 intent.putExtra("email", email);
+                                                intent.putExtra("uid", uid);
                                                 Toast.makeText(MainActivity.this, "Update your Profile First", Toast.LENGTH_SHORT).show();
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);

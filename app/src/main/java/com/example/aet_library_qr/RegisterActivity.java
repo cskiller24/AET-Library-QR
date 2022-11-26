@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void sendUserToNextActivity(String uid) {
-        String email = createemail.getText().toString();
+        String email = mAuth.getCurrentUser().getEmail();
         Intent intent = new Intent(RegisterActivity.this, UpdateProfile.class);
         intent.putExtra("email", email);
         intent.putExtra("uid", uid);
