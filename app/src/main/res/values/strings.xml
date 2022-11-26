@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AET-Library-QR</string>
+
+    <string-array name="college">
+        <item>CET</item>
+        <item>CED</item>
+        <item>College 3</item>
+        <item>College 4</item>
+    </string-array>
+
+    <string-array name="year">
+        <item> </item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>Irreg</item>
+    </string-array>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1044034796196",
+    "project_id": "aet-library",
+    "storage_bucket": "aet-library.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044034796196:android:88de06a9ff83bee60e0431",
+        "android_client_info": {
+          "package_name": "com.example.aet_library_qr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044034796196-e89p6kd62t6qq3pcs1oeqleo1hu0jq2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOjOYB2j55KNuCLR1UzkbXPbv9p37APQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044034796196-e89p6kd62t6qq3pcs1oeqleo1hu0jq2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
