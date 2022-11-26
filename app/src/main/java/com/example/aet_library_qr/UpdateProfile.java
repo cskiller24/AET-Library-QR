@@ -12,13 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UpdateProfile extends AppCompatActivity {
 
     TextView tvEmail;
     EditText createlname, createfname, createmname, createstudentnum, createage;
     Spinner createcollege, createyrlvl2;
-    Button btngo;
+    Button btngo, btnout;
+
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,9 @@ public class UpdateProfile extends AppCompatActivity {
         createage = findViewById(R.id.createage);
         tvEmail = findViewById(R.id.tvEmail);
 
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
         String Email1 = getIntent().getExtras().getString("email");
         String uid = getIntent().getExtras().getString("uid");
         tvEmail.setText(Email1);
@@ -43,16 +51,43 @@ public class UpdateProfile extends AppCompatActivity {
         btngo = findViewById(R.id.btngo);
         btngo.setOnClickListener(v ->
         {
-            Student std = new Student(tvEmail.getText().toString(), createlname.getText().toString(), createfname.getText().toString(), createmname.getText().toString(), createcollege.getSelectedItem().toString(), createyrlvl2.getSelectedItem().toString(), createstudentnum.getText().toString(), createage.getText().toString());
+            if(createlname.getText().toString().isEmpty()){
+                createlname.setError("Enter your Lastname");
+                Toast.makeText(UpdateProfile.this, "Lastname Required", Toast.LENGTH_SHORT).show();
+            }
+            else if(createfname.getText().toString().isEmpty()){
+                createfname.setError("Enter your Firstname");
+                Toast.makeText(UpdateProfile.this, "Firstname Required", Toast.LENGTH_SHORT).show();
+            }
+            else if(createage.getText().toString().isEmpty()){
+                createage.setError("Enter your Age");
+                Toast.makeText(UpdateProfile.this, "Age Required", Toast.LENGTH_SHORT).show();
+            }
+            else if(createstudentnum.getText().toString().isEmpty()){
+                createage.setError("Enter your Student number");
+                Toast.makeText(UpdateProfile.this, "Student Number Required", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Student std = new Student(tvEmail.getText().toString(), createlname.getText().toString(), createfname.getText().toString(), createmname.getText().toString(), createcollege.getSelectedItem().toString(), createyrlvl2.getSelectedItem().toString(), createstudentnum.getText().toString(), createage.getText().toString());
 
-            dao.add(std, uid).addOnSuccessListener(suc ->
-            {
-                sendUserToNextActivity();
-                Toast.makeText(UpdateProfile.this, "Update Done", Toast.LENGTH_SHORT).show();
-            }).addOnFailureListener(er ->
-            {
-                Toast.makeText(UpdateProfile.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-            });
+                dao.add(std, uid).addOnSuccessListener(suc ->
+                {
+                    sendUserToNextActivity();
+                    Toast.makeText(UpdateProfile.this, "Done", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(er ->
+                {
+                    Toast.makeText(UpdateProfile.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+
+        btnout = findViewById(R.id.btnout);
+        btnout.setOnClickListener(v ->
+        {
+            mAuth.signOut();
+            Intent intent=new Intent(UpdateProfile.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
     }

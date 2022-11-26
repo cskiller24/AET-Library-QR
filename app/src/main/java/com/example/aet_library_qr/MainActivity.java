@@ -117,12 +117,39 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         if (snapshot.getValue() == null) {
-                            Intent intent = new Intent(MainActivity.this, HomeStudent.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            return;
+                            //needs to put user with no data to update first
+                            FirebaseDatabase.getInstance()
+                                    .getReference("Student")
+                                    .child(currentuid)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.getValue() == null){
+                                                String email = username.getText().toString();
+                                                Intent intent = new Intent(MainActivity.this, UpdateProfile.class);
+                                                intent.putExtra("email", email);
+                                                Toast.makeText(MainActivity.this, "Update your Profile First", Toast.LENGTH_SHORT).show();
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intent);
+                                                return;
+                                            }
+                                            else{
+                                                Intent intent = new Intent(MainActivity.this, HomeStudent.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intent);
+                                                return;
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(MainActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                         }
-                        if ((boolean) snapshot.getValue()) {
+                        else {
                             Intent intent = new Intent(MainActivity.this, HomeAdmin.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);

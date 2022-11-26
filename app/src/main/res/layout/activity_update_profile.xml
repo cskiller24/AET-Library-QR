@@ -7,6 +7,20 @@
     android:background="@drawable/loginbg"
     tools:context=".UpdateProfile">
 
+    <Button
+        android:id="@+id/btnout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#CC0C32"
+        android:text="Logout"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.765" />
+
     <Spinner
         android:id="@+id/createcollege"
         android:layout_width="214dp"

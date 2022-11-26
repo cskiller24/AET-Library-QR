@@ -49,7 +49,6 @@ public class UpdateProfile2 extends AppCompatActivity {
         createstudentnum = findViewById(R.id.createstudentnum);
         createage = findViewById(R.id.createage);
 
-        //String uid = getIntent().getExtras().getString("uid");
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -67,8 +66,6 @@ public class UpdateProfile2 extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getValue() != null){
                             Student info = snapshot.getValue(Student.class);
-                            String YrLevel = info.getYrlevel();
-                            createyrlvl2.setSelection(Integer.parseInt(YrLevel));
                             createstudentnum.setText(info.getStdnum());
                             createstudentnum.setEnabled(false);
                             createlname.setText(info.getLname());
@@ -91,23 +88,37 @@ public class UpdateProfile2 extends AppCompatActivity {
         btngo = findViewById(R.id.btngo);
         btngo.setOnClickListener(v ->
         {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("lname", createlname.getText().toString());
-            hashMap.put("fname", createfname.getText().toString());
-            hashMap.put("mname", createmname.getText().toString());
-            hashMap.put("cdept", createcollege.getSelectedItem().toString());
-            hashMap.put("yrlevel", createyrlvl2.getSelectedItem().toString());
-            hashMap.put("age", createage.getText().toString());
+            if(createlname.getText().toString().isEmpty()){
+                createlname.setError("Enter your Lastname");
+                Toast.makeText(UpdateProfile2.this, "Lastname Required", Toast.LENGTH_SHORT).show();
+            }
+            else if(createfname.getText().toString().isEmpty()){
+                createfname.setError("Enter your Firstname");
+                Toast.makeText(UpdateProfile2.this, "Firstname Required", Toast.LENGTH_SHORT).show();
+            }
+            else if(createage.getText().toString().isEmpty()){
+                createage.setError("Enter your Age");
+                Toast.makeText(UpdateProfile2.this, "Age Required", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("lname", createlname.getText().toString());
+                hashMap.put("fname", createfname.getText().toString());
+                hashMap.put("mname", createmname.getText().toString());
+                hashMap.put("cdept", createcollege.getSelectedItem().toString());
+                hashMap.put("yrlevel", createyrlvl2.getSelectedItem().toString());
+                hashMap.put("age", createage.getText().toString());
 
-            //needs to put current user logged UID
-            dao.update(mUser.getUid(), hashMap).addOnSuccessListener(suc ->
-            {
-                sendUserToNextActivity();
-                Toast.makeText(UpdateProfile2.this, "Update Done", Toast.LENGTH_SHORT).show();
-            }).addOnFailureListener(er ->
-            {
-                Toast.makeText(UpdateProfile2.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-            });
+                //needs to put current user logged UID
+                dao.update(mUser.getUid(), hashMap).addOnSuccessListener(suc ->
+                {
+                    sendUserToNextActivity();
+                    Toast.makeText(UpdateProfile2.this, "Update Done", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(er ->
+                {
+                    Toast.makeText(UpdateProfile2.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
         });
 
     }
