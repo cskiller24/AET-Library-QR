@@ -26,4 +26,9 @@ public class DAOBook {
         this.reference.addListenerForSingleValueEvent(listener);
     }
 
+    public void getBook(String key, ValueEventListener listener)
+    {
+        this.reference.child(key).addListenerForSingleValueEvent(listener);
+    }
+
 }
