@@ -39,7 +39,7 @@ public class UpdateProfile2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_profile);
+        setContentView(R.layout.activity_update_profile2);
 
         createlname = findViewById(R.id.createlname);
         createfname = findViewById(R.id.createfname);
