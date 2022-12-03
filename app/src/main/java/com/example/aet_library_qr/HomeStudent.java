@@ -22,7 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeStudent extends AppCompatActivity {
 
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
-    ImageButton findabookbutton, booktransactionsbutton, borrowabookbutton, returnabookbutton, logoutstudent, updateprofilestudent;
+    ImageButton findabookbutton, booktransactionsbutton, borrowabookbutton, returnabookbutton, updateprofilestudent;
+
+    Button logoutstudent;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
