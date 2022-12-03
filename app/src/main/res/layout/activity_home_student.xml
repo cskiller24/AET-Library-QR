@@ -204,7 +204,7 @@
         app:layout_constraintVertical_bias="0.229" />
 
     <TextView
-        android:id="@+id/infocdepttxtview2"
+        android:id="@+id/infocdept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="136dp"
@@ -232,7 +232,7 @@
         app:layout_constraintVertical_bias="0.259" />
 
     <TextView
-        android:id="@+id/infoyear"
+        android:id="@+id/infoyrlevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="124dp"

@@ -14,8 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeAdmin extends AppCompatActivity {
 
     ImageButton bookreturnscanner, studenttransactionscanner, addabook,
-            logoutbtnadmin, listofbooks, removeabook;
-
+            listofbooks, removeabook;
+    Button logoutbtnadmin;
     FirebaseAuth mAuth;
 
     @Override
@@ -25,7 +25,7 @@ public class HomeAdmin extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        logoutbtnadmin = (ImageButton) findViewById(R.id.logoutbtnadmin);
+        logoutbtnadmin = (Button) findViewById(R.id.logoutbtnadmin);
         logoutbtnadmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { logout(); }
@@ -70,6 +70,5 @@ public class HomeAdmin extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
     }
 }
