@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#ff5b5b"
         android:text="Logout"
-        android:textStyle="bold"
         android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -300,6 +300,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.321" />
+
+    <Button
+        android:id="@+id/generateStudentQrBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Generate your QR Code"
+        app:layout_constraintBottom_toTopOf="@+id/logoutstudent"
+        app:layout_constraintEnd_toEndOf="@+id/updateprofilestudent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/refreshstudent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

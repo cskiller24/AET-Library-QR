@@ -19,6 +19,13 @@
         android:theme="@style/Theme.AETLibraryQR"
         tools:targetApi="31">
         <activity
+            android:name=".GenerateQRStudent"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".BorrowBookStudent"
             android:exported="false">
             <meta-data

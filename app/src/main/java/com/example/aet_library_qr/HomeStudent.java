@@ -23,7 +23,7 @@ public class HomeStudent extends AppCompatActivity {
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
     ImageButton findabookbutton, booktransactionsbutton, borrowabookbutton, returnabookbutton, updateprofilestudent;
 
-    Button logoutstudent;
+    Button logoutstudent, generateStudentQrBtn;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -124,6 +124,15 @@ public class HomeStudent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(HomeStudent.this, UpdateProfile2.class);
+                startActivity(intent);
+            }
+        });
+
+        generateStudentQrBtn = (Button) findViewById(R.id.generateStudentQrBtn);
+        generateStudentQrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeStudent.this, GenerateQRStudent.class);
                 startActivity(intent);
             }
         });
