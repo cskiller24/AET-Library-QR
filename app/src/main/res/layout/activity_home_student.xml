@@ -103,33 +103,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.603"
         app:srcCompat="@drawable/updateprofile"
-        tools:ignore="SpeakableTextPresentCheck" /><![CDATA[
-
-
-
-    \
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.748"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ]]>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/infonametxtview"

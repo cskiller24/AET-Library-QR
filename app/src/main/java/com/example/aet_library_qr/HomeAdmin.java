@@ -3,7 +3,6 @@ package com.example.aet_library_qr;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +53,14 @@ public class HomeAdmin extends AppCompatActivity {
                 changeActivity(ListOfBooksAdmin.class, true);
             }
         });
+
+        studenttransactionscanner = findViewById(R.id.studenttransactionscanner);
+        studenttransactionscanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeActivity(QRScan.class, true);
+            }
+        });
     }
 
     private void logout() {
@@ -65,6 +72,7 @@ public class HomeAdmin extends AppCompatActivity {
     {
         Intent intent = new Intent(HomeAdmin.this, cls);
         if(returnable) {
+            intent.putExtra("classType", "HomeAdmin");
             startActivity(intent);
         } else {
             startActivity(intent);

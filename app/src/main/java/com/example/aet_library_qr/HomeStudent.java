@@ -153,6 +153,7 @@ public class HomeStudent extends AppCompatActivity {
     private void borrowBook() {
         //QR Scanner to Borrow Book
         Intent intent=new Intent(HomeStudent.this, QRScan.class);
+        intent.putExtra("classType", "HomeStudent");
         startActivity(intent);
 
     }
@@ -161,7 +162,7 @@ public class HomeStudent extends AppCompatActivity {
     }
 
     private void findBook() {
-        Intent intent=new Intent(HomeStudent.this, BorrowBookStudent.class);
+        Intent intent=new Intent(HomeStudent.this, BookInfoStudent.class);
         startActivity(intent);
 
     }

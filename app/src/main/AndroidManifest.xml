@@ -19,6 +19,13 @@
         android:theme="@style/Theme.AETLibraryQR"
         tools:targetApi="31">
         <activity
+            android:name=".BookLogStudent"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".GenerateQRStudent"
             android:exported="false">
             <meta-data
@@ -26,7 +33,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".BorrowBookStudent"
+            android:name=".BorrowBookAdmin"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -34,6 +41,20 @@
         </activity>
         <activity
             android:name=".QRScan"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".BookInfoStudent"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".QRScanStudent"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

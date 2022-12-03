@@ -12,13 +12,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class BorrowBookStudent extends AppCompatActivity {
+public class BookInfoStudent extends AppCompatActivity {
     TextView textView3, infoTitle, infoAuthor, infoYearPub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_borrow_book_student);
+        setContentView(R.layout.activity_book_info_student);
         textView3 = findViewById(R.id.textView3);
         infoTitle = findViewById(R.id.infoTitle);
         infoAuthor = findViewById(R.id.infoAuthor);
@@ -43,7 +43,7 @@ public class BorrowBookStudent extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(BorrowBookStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookInfoStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
     }
