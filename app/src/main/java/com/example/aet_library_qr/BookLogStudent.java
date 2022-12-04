@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BookLogStudent extends AppCompatActivity {
 
@@ -92,6 +93,7 @@ public class BookLogStudent extends AppCompatActivity {
                             bkTitle.setText(info.getTitle());
                             bkAuthor.setText(info.getAuthor());
                             bkYear.setText(info.getYearPublished());
+                            info.setIs_available(false);
 
                         }
                     }
@@ -122,6 +124,7 @@ public class BookLogStudent extends AppCompatActivity {
                     }
                 });
 
+        DAOBook daoBook = new DAOBook();
         DAOTransaction dao = new DAOTransaction();
         btnConfirmBorrow = findViewById(R.id.btnConfirmBorrow);
         btnConfirmBorrow.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +140,19 @@ public class BookLogStudent extends AppCompatActivity {
                 });
 
                 //Will add update => Book is_available = true/false
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("is_available", false);
+
+                daoBook.updateBorrow(bookID1, hashMap).addOnSuccessListener(suc ->{
+                    sendUserToNextActivity();
+                    Toast.makeText(BookLogStudent.this, "Done", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(er ->
+                {
+                    Toast.makeText(BookLogStudent.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                });
             }
         });
+
 
     }
 

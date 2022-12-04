@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class BorrowBookAdmin extends AppCompatActivity {
 
     TextView tvaKey, tvaTitle, tvaAuthor, tvaYear, tvaAvail;
@@ -79,6 +81,21 @@ public class BorrowBookAdmin extends AppCompatActivity {
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                DAOBook daoBook = new DAOBook();
+
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("is_available", true);
+
+                daoBook.updateBorrow(resultID1, hashMap).addOnSuccessListener(suc ->{
+                    Intent intent=new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(BorrowBookAdmin.this, "Done", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(er ->
+                {
+                    Toast.makeText(BorrowBookAdmin.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                });
 
             }
         });

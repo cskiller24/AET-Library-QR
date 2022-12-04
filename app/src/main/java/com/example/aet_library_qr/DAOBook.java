@@ -6,6 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class DAOBook {
     private FirebaseDatabase database;
     private DatabaseReference reference;
@@ -29,6 +31,10 @@ public class DAOBook {
     public void getBook(String key, ValueEventListener listener)
     {
         this.reference.child(key).addListenerForSingleValueEvent(listener);
+    }
+
+    public Task<Void> updateBorrow(String key, HashMap<String, Object> hashMap){
+        return this.reference.child(key).updateChildren(hashMap);
     }
 
 }
