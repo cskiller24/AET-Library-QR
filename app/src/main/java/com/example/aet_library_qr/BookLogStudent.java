@@ -2,6 +2,8 @@ package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,12 +26,14 @@ import java.util.HashMap;
 
 public class BookLogStudent extends AppCompatActivity {
 
+    // ADMIN BOOK LOGS
+
     TextView bookStudentNum, bookIDcode, bkTitle, bkAuthor, bkYear, stdNum1, stdName1;
     Button btnConfirmBorrow;
 
-    ListView bookLogsView;
-    ArrayList<String> list;
-    ArrayAdapter<String> adapter;
+    RecyclerView recyclerView;
+    BookLogListAdapter adapter;
+    ArrayList<Transaction> transactions;
     Transaction bookLogs;
 
     FirebaseAuth mAuth;
@@ -60,27 +64,28 @@ public class BookLogStudent extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         bookLogs = new Transaction();
-        bookLogsView = findViewById(R.id.bookLogsView);
-        list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.transaction_info, R.id.text1, list);
+        recyclerView = findViewById(R.id.bookLogsRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(BookLogStudent.this));
+        transactions = new ArrayList<>();
+        adapter = new BookLogListAdapter(BookLogStudent.this, transactions);
 
-        FirebaseDatabase.getInstance()
-                .getReference("Transaction")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            bookLogs = ds.getValue(Transaction.class);
-                            list.add("\uD83D\uDD32 ● " + bookLogs.getBookTitle());
-                        }
-                        bookLogsView.setAdapter(adapter);
-                    }
+        DAOTransaction daoTransaction = new DAOTransaction();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+        daoTransaction.getStudentTransactionsByUID(resultID1, new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Transaction transaction = dataSnapshot.getValue(Transaction.class);
+                    transactions.add(transaction);
+                }
+                recyclerView.setAdapter(adapter);
+            }
 
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         FirebaseDatabase.getInstance()
                 .getReference("Book")
@@ -157,6 +162,14 @@ public class BookLogStudent extends AppCompatActivity {
     }
 
     private void sendUserToNextActivity() {
+        Intent intent = new Intent(BookLogStudent.this, HomeAdmin.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(BookLogStudent.this, HomeAdmin.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

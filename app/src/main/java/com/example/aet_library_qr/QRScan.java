@@ -12,11 +12,13 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 public class QRScan extends AppCompatActivity {
+    String classType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscan);
+        classType = getIntent().getStringExtra("classType");
         scanBook();
 
     }
@@ -33,6 +35,7 @@ public class QRScan extends AppCompatActivity {
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
         options.setCaptureActivity(ScanBook.class);
+        options.addExtra("classType", classType);
         barLauncher.launch(options);
 
     }
@@ -62,4 +65,18 @@ public class QRScan extends AppCompatActivity {
         }
     });
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (classType.equals("HomeAdmin") || classType.equals("BorrowBookAdmin")) {
+            Intent intent = new Intent(QRScan.this, HomeAdmin.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        if (classType.equals("HomeStudent")) {
+            Intent intent = new Intent(QRScan.this, Student.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
 }
