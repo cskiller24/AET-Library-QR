@@ -20,76 +20,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.783" />
-
-    <ImageButton
-        android:id="@+id/findabookbutton"
-        android:layout_width="163dp"
-        android:layout_height="66dp"
-        android:backgroundTint="#0C66CC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398"
-        app:srcCompat="@drawable/a"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/booktransactionsbutton"
-        android:layout_width="161dp"
-        android:layout_height="68dp"
-        android:backgroundTint="#0C66CC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.866"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.404"
-        app:srcCompat="@drawable/b"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/borrowabookbutton"
-        android:layout_width="163dp"
-        android:layout_height="68dp"
-        android:backgroundTint="#0C66CC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/c"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/returnabookbutton"
-        android:layout_width="161dp"
-        android:layout_height="68dp"
-        android:backgroundTint="#0C66CC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.858"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@drawable/d"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/refreshstudent"
-        android:layout_width="161dp"
-        android:layout_height="68dp"
-        android:backgroundTint="#0C66CC"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603"
-        app:srcCompat="@drawable/refresh"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.83" />
 
     <ImageButton
         android:id="@+id/updateprofilestudent"
@@ -97,13 +28,51 @@
         android:layout_height="68dp"
         android:backgroundTint="#0C66CC"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bookLogsBtn"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/bookLogsBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603"
+        app:layout_constraintVertical_bias="0.499"
         app:srcCompat="@drawable/updateprofile"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/findabookbutton"
+        android:layout_width="163dp"
+        android:layout_height="66dp"
+        android:backgroundTint="#0C66CC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/updateprofilestudent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/updateprofilestudent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.396"
+        app:srcCompat="@drawable/a"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/generateStudentQrBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Generate your QR Code"
+        app:layout_constraintBottom_toTopOf="@+id/logoutstudent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookLogsBtn" />
+
+    <Button
+        android:id="@+id/bookLogsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="My book logs"
+        app:layout_constraintBottom_toTopOf="@+id/generateStudentQrBtn"
+        app:layout_constraintEnd_toEndOf="@+id/generateStudentQrBtn"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="@+id/generateStudentQrBtn"
+        app:layout_constraintTop_toBottomOf="@+id/updateprofilestudent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/infonametxtview"
@@ -274,19 +243,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.321" />
-
-    <Button
-        android:id="@+id/generateStudentQrBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Generate your QR Code"
-        app:layout_constraintBottom_toTopOf="@+id/logoutstudent"
-        app:layout_constraintEnd_toEndOf="@+id/updateprofilestudent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/refreshstudent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

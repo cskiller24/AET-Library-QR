@@ -36,7 +36,6 @@ public class ListOfBooksAdmin extends AppCompatActivity {
         daoBook.getAllBooks(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("List of book", "" + snapshot.getValue());
                 for (DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     Book book = dataSnapshot.getValue(Book.class);

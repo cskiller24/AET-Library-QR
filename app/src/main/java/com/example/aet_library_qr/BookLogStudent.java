@@ -62,14 +62,14 @@ public class BookLogStudent extends AppCompatActivity {
         bookLogs = new Transaction();
         bookLogsView = findViewById(R.id.bookLogsView);
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(this, R.layout.transaction_info,R.id.text1, list);
+        adapter = new ArrayAdapter<String>(this, R.layout.transaction_info, R.id.text1, list);
 
         FirebaseDatabase.getInstance()
                 .getReference("Transaction")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds: snapshot.getChildren()){
+                        for (DataSnapshot ds : snapshot.getChildren()) {
                             bookLogs = ds.getValue(Transaction.class);
                             list.add("\uD83D\uDD32 ● " + bookLogs.getBookTitle());
                         }
@@ -88,7 +88,7 @@ public class BookLogStudent extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue() != null){
+                        if (snapshot.getValue() != null) {
                             Book info = snapshot.getValue(Book.class);
                             bkTitle.setText(info.getTitle());
                             bkAuthor.setText(info.getAuthor());
@@ -110,7 +110,7 @@ public class BookLogStudent extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue() != null){
+                        if (snapshot.getValue() != null) {
                             Student info1 = snapshot.getValue(Student.class);
                             String name = info1.getFname() + " " + info1.getLname();
                             stdNum1.setText(info1.getStdnum());
@@ -143,7 +143,7 @@ public class BookLogStudent extends AppCompatActivity {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("is_available", false);
 
-                daoBook.updateBorrow(bookID1, hashMap).addOnSuccessListener(suc ->{
+                daoBook.updateBorrow(bookID1, hashMap).addOnSuccessListener(suc -> {
                     sendUserToNextActivity();
                     Toast.makeText(BookLogStudent.this, "Done", Toast.LENGTH_SHORT).show();
                 }).addOnFailureListener(er ->

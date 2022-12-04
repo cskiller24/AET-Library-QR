@@ -22,8 +22,14 @@ public class QRScan extends AppCompatActivity {
     }
 
     private void scanBook() {
+        String type = getIntent().getStringExtra("classType");
         ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to flash on");
+        if (type.equals("HomeAdmin") || type.equals("HomeStudent")) {
+            options.setPrompt("Scan a book qr");
+        }
+        if (type.equals("BorrowBookAdmin")) {
+            options.setPrompt("Scan student qr");
+        }
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
         options.setCaptureActivity(ScanBook.class);
@@ -32,37 +38,27 @@ public class QRScan extends AppCompatActivity {
     }
 
 
-    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
-        if(result.getContents() != null) {
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents() != null) {
             String type1 = getIntent().getExtras().getString("classType");
-            AlertDialog.Builder builder = new AlertDialog.Builder(QRScan.this);
-            builder.setTitle("Result");
-            builder.setMessage(result.getContents());
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String resultID = result.getContents();
+            String resultID = result.getContents();
 
-                    if(type1.equals("HomeAdmin")){
-                        Intent intent = new Intent(QRScan.this, BorrowBookAdmin.class);
-                        intent.putExtra("resultID", resultID);
-                        startActivity(intent);
-                    }
-                    else if(type1.equals("HomeStudent")){
-                        Intent intent = new Intent(QRScan.this, BookInfoStudent.class);
-                        intent.putExtra("resultID", resultID);
-                        startActivity(intent);
-                    }
-                    else if(type1.equals("BorrowBookAdmin")){
-                        //Student Book Log
-                        String bookID = getIntent().getExtras().getString("resultID1");
-                        Intent intent = new Intent(QRScan.this, BookLogStudent.class);
-                        intent.putExtra("resultID", resultID); //StudentNum
-                        intent.putExtra("bookID", bookID);//BookID
-                        startActivity(intent);
-                    }
-                }
-            }).show();
+            if (type1.equals("HomeAdmin")) {
+                Intent intent = new Intent(QRScan.this, BorrowBookAdmin.class);
+                intent.putExtra("resultID", resultID);
+                startActivity(intent);
+            } else if (type1.equals("HomeStudent")) {
+                Intent intent = new Intent(QRScan.this, BookInfoStudent.class);
+                intent.putExtra("resultID", resultID);
+                startActivity(intent);
+            } else if (type1.equals("BorrowBookAdmin")) {
+                //Student Book Log
+                String bookID = getIntent().getExtras().getString("resultID1");
+                Intent intent = new Intent(QRScan.this, BookLogStudent.class);
+                intent.putExtra("resultID", resultID); //StudentNum
+                intent.putExtra("bookID", bookID);//BookID
+                startActivity(intent);
+            }
         }
     });
 

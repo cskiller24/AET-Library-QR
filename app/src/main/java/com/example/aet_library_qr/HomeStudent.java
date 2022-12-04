@@ -21,9 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeStudent extends AppCompatActivity {
 
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
-    ImageButton findabookbutton, booktransactionsbutton, borrowabookbutton, returnabookbutton, updateprofilestudent;
+    ImageButton findabookbutton, updateprofilestudent;
 
-    Button logoutstudent, generateStudentQrBtn;
+    Button logoutstudent, generateStudentQrBtn, bookLogs;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -46,13 +46,11 @@ public class HomeStudent extends AppCompatActivity {
         infostudentnum = findViewById(R.id.infostudentnum);
 
         findabookbutton = findViewById(R.id.findabookbutton);
-        booktransactionsbutton = findViewById(R.id.booktransactionsbutton);
-        borrowabookbutton = findViewById(R.id.borrowabookbutton);
-        returnabookbutton = findViewById(R.id.returnabookbutton);
         logoutstudent = findViewById(R.id.logoutstudent);
         updateprofilestudent = findViewById(R.id.updateprofilestudent);
+        bookLogs = findViewById(R.id.bookLogsBtn);
 
-        if(mAuth.getUid() != null) {
+        if (mAuth.getUid() != null) {
             currentuser = mAuth.getUid();
         }
 
@@ -61,29 +59,28 @@ public class HomeStudent extends AppCompatActivity {
                 .child("Student")
                 .child(currentuser)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.getValue() != null){
-                        Student info = snapshot.getValue(Student.class);
-                        String name = info.getFname() + " " + info.getMname() + ". " + info.getLname();
-                        infoname.setText(name);
-                        infoemail.setText(info.getEmail());
-                        infocdept.setText(info.getCdept());
-                        infoyrlevel.setText(info.getYrlevel());
-                        infoage.setText(info.getAge());
-                        infostudentnum.setText(info.getStdnum());
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+                            Student info = snapshot.getValue(Student.class);
+                            String name = info.getFname() + " " + info.getMname() + ". " + info.getLname();
+                            infoname.setText(name);
+                            infoemail.setText(info.getEmail());
+                            infocdept.setText(info.getCdept());
+                            infoyrlevel.setText(info.getYrlevel());
+                            infoage.setText(info.getAge());
+                            infostudentnum.setText(info.getStdnum());
+                        } else {
+                            Toast.makeText(HomeStudent.this, "No Data Available", Toast.LENGTH_SHORT).show();
+                            logout();
+                        }
                     }
-                    else{
-                        Toast.makeText(HomeStudent.this, "No Data Available", Toast.LENGTH_SHORT).show();
-                        logout();
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(HomeStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(HomeStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         findabookbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,26 +89,6 @@ public class HomeStudent extends AppCompatActivity {
             }
         });
 
-        booktransactionsbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bookTransaction();
-            }
-        });
-
-        borrowabookbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                borrowBook();
-            }
-        });
-
-        returnabookbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                returnBook();
-            }
-        });
 
         logoutstudent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +100,7 @@ public class HomeStudent extends AppCompatActivity {
         updateprofilestudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(HomeStudent.this, UpdateProfile2.class);
+                Intent intent = new Intent(HomeStudent.this, UpdateProfile2.class);
                 startActivity(intent);
             }
         });
@@ -132,38 +109,39 @@ public class HomeStudent extends AppCompatActivity {
         generateStudentQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeStudent.this, GenerateQRStudent.class);
-                startActivity(intent);
+                generateStudentQr();
+            }
+        });
+
+        bookLogs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bookLogs();
             }
         });
 
     }
 
-
     private void logout() {
         mAuth.signOut();
-        Intent intent=new Intent(HomeStudent.this, MainActivity.class);
+        Intent intent = new Intent(HomeStudent.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void returnBook() {
-    }
-
-    private void borrowBook() {
-        //QR Scanner to Borrow Book
-        Intent intent=new Intent(HomeStudent.this, QRScan.class);
+    private void findBook() {
+        Intent intent = new Intent(HomeStudent.this, QRScan.class);
         intent.putExtra("classType", "HomeStudent");
         startActivity(intent);
-
     }
 
-    private void bookTransaction() {
-    }
-
-    private void findBook() {
-        Intent intent=new Intent(HomeStudent.this, BookInfoStudent.class);
+    private void generateStudentQr() {
+        Intent intent = new Intent(HomeStudent.this, GenerateQRStudent.class);
         startActivity(intent);
+    }
 
+    private void bookLogs() {
+        Intent intent = new Intent(HomeStudent.this, BookLogsStudent.class);
+        startActivity(intent);
     }
 }
