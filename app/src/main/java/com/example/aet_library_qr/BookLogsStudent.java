@@ -42,7 +42,7 @@ public class BookLogsStudent extends AppCompatActivity {
                     Transaction transaction1 = dataSnapshot.getValue(Transaction.class);
                     transactions.add(transaction1);
                 }
-                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
