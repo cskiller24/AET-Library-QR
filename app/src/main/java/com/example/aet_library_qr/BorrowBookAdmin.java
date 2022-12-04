@@ -77,7 +77,6 @@ public class BorrowBookAdmin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +95,24 @@ public class BorrowBookAdmin extends AppCompatActivity {
                 {
                     Toast.makeText(BorrowBookAdmin.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+
+                FirebaseDatabase.getInstance()
+                        .getReference("Transaction")
+                        .orderByChild("bookID")
+                        .equalTo(resultID1)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot ds: snapshot.getChildren()){
+                                    ds.getRef().removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
             }
         });
