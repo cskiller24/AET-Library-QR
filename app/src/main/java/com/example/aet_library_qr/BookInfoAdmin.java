@@ -1,8 +1,10 @@
 package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +26,8 @@ public class BookInfoAdmin extends AppCompatActivity {
     TextView bookAuthor;
     TextView bookYearPublished;
     TextView bookIsAvailable;
-    Button generateQR;
+    Button generateQR, bookInfoUpdateBook, bookInfoDeleteBook;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,10 @@ public class BookInfoAdmin extends AppCompatActivity {
         bookIsAvailable = (TextView) findViewById(R.id.bookIsAvailable);
 
         generateQR = (Button) findViewById(R.id.bookGenerateQR);
+        bookInfoUpdateBook = (Button) findViewById(R.id.bookInfoUpdateBook);
+        bookInfoDeleteBook = (Button) findViewById(R.id.bookInfoDeleteBook);
+
+        DAOBook daoBook;
 
         /**
          * Pag kukuha ng book information need dito ng key
@@ -45,8 +52,9 @@ public class BookInfoAdmin extends AppCompatActivity {
          * if ever na walang key, automatic redirect sa admin home page with message
          */
         Intent intent = getIntent();
+        daoBook = new DAOBook();
 
-        if(intent.getStringExtra("key") == null) {
+        if (intent.getStringExtra("key") == null) {
             changeActivity(MainActivity.class, false);
             Toast.makeText(BookInfoAdmin.this, "Cannot search the book", Toast.LENGTH_SHORT).show();
             return;
@@ -62,16 +70,53 @@ public class BookInfoAdmin extends AppCompatActivity {
                 startActivity(qrGenerateActivity);
             }
         });
+
+        bookInfoUpdateBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent bookUpdateActivity = new Intent(BookInfoAdmin.this, UpdateBookAdmin.class);
+                bookUpdateActivity.putExtra("key", key);
+                startActivity(bookUpdateActivity);
+            }
+        });
+
+        bookInfoDeleteBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(BookInfoAdmin.this);
+                builder.setTitle("Delete book");
+                builder.setMessage("Confirm delete " + bookTitle.getText().toString());
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        daoBook.deleteBook(key).addOnSuccessListener(suc -> {
+                            Intent homeAdmin = new Intent(getApplicationContext(), HomeAdmin.class);
+                            Toast.makeText(BookInfoAdmin.this, "Book deleted", Toast.LENGTH_SHORT).show();
+                            startActivity(homeAdmin);
+                            finish();
+                        }).addOnFailureListener(err -> {
+                            Toast.makeText(BookInfoAdmin.this, "" + err.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }).show();
+
+            }
+        });
     }
 
-    private void getBook(String key)
-    {
+    private void getBook(String key) {
         DAOBook daoBook = new DAOBook();
 
         daoBook.getBook(key, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
+                if (snapshot.getValue() == null) {
                     changeActivity(MainActivity.class, false);
                     Toast.makeText(BookInfoAdmin.this, "Cannot search the book", Toast.LENGTH_SHORT).show();
                     return;
@@ -91,11 +136,10 @@ public class BookInfoAdmin extends AppCompatActivity {
         });
     }
 
-    private void changeActivity(Class<?> cls, boolean returnable)
-    {
+    private void changeActivity(Class<?> cls, boolean returnable) {
         Intent changeActivity = new Intent(BookInfoAdmin.this, cls);
 
-        if(returnable) {
+        if (returnable) {
             startActivity(changeActivity);
         } else {
             startActivity(changeActivity);

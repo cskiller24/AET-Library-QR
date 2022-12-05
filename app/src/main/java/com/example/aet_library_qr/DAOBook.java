@@ -37,4 +37,18 @@ public class DAOBook {
         return this.reference.child(key).updateChildren(hashMap);
     }
 
+    public Task<Void> updateBook(String key, Book book)
+    {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("author", book.getAuthor());
+        hashMap.put("title", book.getTitle());
+        hashMap.put("yearPublished", book.getYearPublished());
+
+        return this.reference.child(key).updateChildren(hashMap);
+    }
+
+    public Task<Void> deleteBook(String key) {
+        return this.reference.child(key).removeValue();
+    }
 }

@@ -60,4 +60,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.758" />
 
+    <Button
+        android:id="@+id/bookInfoUpdateBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="74dp"
+        android:text="Update book"
+        app:layout_constraintBottom_toTopOf="@+id/bookGenerateQR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookIsAvailable"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/bookInfoDeleteBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookIsAvailable" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
