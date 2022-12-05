@@ -3,6 +3,7 @@ package com.example.aet_library_qr;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,12 @@ public class BookInfoStudent extends AppCompatActivity {
                         infoTitle.setText(info.getTitle());
                         infoAuthor.setText(info.getAuthor());
                         infoYearPub.setText(info.getYearPublished());
+                    }
+                    else{
+                        Toast.makeText(BookInfoStudent.this, "Book does not exist", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(BookInfoStudent.this, HomeAdmin.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
 

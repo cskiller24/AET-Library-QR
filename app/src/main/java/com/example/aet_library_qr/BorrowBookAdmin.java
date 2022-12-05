@@ -1,8 +1,10 @@
 package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -53,10 +55,30 @@ public class BorrowBookAdmin extends AppCompatActivity {
                             if(info.isIs_available() == true){
                                 tvaAvail.setText("Available");
                                 btnReturn.setEnabled(false);
+                                btnBorrow.setEnabled(true);
+                            }
+                            else if(info.isIs_available() == false){
+                                tvaAvail.setText("Not Available");
+                                btnReturn.setEnabled(true);
+                                btnBorrow.setEnabled(false);
+                            }
+                            else if(resultID1 == null){
+                                tvaAvail.setText("Book does not exist");
+                                btnReturn.setEnabled(false);
+                                btnBorrow.setEnabled(false);
+                                Toast.makeText(BorrowBookAdmin.this, "Book does not exist", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                                startActivity(intent);
+                                finish();
                             }
                             else{
-                                tvaAvail.setText("Not Available");
+                                tvaAvail.setText("Book does not exist");
+                                btnReturn.setEnabled(false);
                                 btnBorrow.setEnabled(false);
+                                Toast.makeText(BorrowBookAdmin.this, "Book does not exist", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                                startActivity(intent);
+                                finish();
                             }
                         }
                     }
