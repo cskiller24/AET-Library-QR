@@ -51,17 +51,6 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/generateStudentQrBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="Generate your QR Code"
-        app:layout_constraintBottom_toTopOf="@+id/logoutstudent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bookLogsBtn" />
-
-    <Button
         android:id="@+id/bookLogsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +62,18 @@
         app:layout_constraintStart_toStartOf="@+id/generateStudentQrBtn"
         app:layout_constraintTop_toBottomOf="@+id/updateprofilestudent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/generateStudentQrBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Generate your QR Code"
+        app:layout_constraintBottom_toTopOf="@+id/logoutstudent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookLogsBtn" />
 
     <TextView
         android:id="@+id/infonametxtview"
@@ -243,6 +244,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.321" />
+
+    <Button
+        android:id="@+id/btnChangePass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="538dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

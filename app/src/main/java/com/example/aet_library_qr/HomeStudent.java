@@ -23,7 +23,7 @@ public class HomeStudent extends AppCompatActivity {
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
     ImageButton findabookbutton, updateprofilestudent;
 
-    Button logoutstudent, generateStudentQrBtn, bookLogs;
+    Button logoutstudent, generateStudentQrBtn, bookLogs, btnChangePass;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -120,6 +120,19 @@ public class HomeStudent extends AppCompatActivity {
             }
         });
 
+        btnChangePass = findViewById(R.id.btnChangePass);
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePassword();
+            }
+        });
+
+    }
+
+    private void changePassword() {
+        Intent intent = new Intent(HomeStudent.this, ChangePassword.class);
+        startActivity(intent);
     }
 
     private void logout() {

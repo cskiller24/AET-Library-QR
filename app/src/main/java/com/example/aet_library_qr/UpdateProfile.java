@@ -20,7 +20,7 @@ public class UpdateProfile extends AppCompatActivity {
     TextView tvEmail;
     EditText createlname, createfname, createmname, createstudentnum, createage;
     Spinner createcollege, createyrlvl2;
-    Button btngo, btnout;
+    Button btngo, btnout, btnChangePass;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -88,6 +88,12 @@ public class UpdateProfile extends AppCompatActivity {
             Intent intent=new Intent(UpdateProfile.this, MainActivity.class);
             startActivity(intent);
             finish();
+        });
+
+        btnChangePass = findViewById(R.id.btnChangePass);
+        btnChangePass.setOnClickListener(v ->{
+            Intent intent=new Intent(UpdateProfile.this, ChangePassword.class);
+            startActivity(intent);
         });
 
     }
