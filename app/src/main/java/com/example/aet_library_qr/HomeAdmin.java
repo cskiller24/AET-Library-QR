@@ -1,5 +1,6 @@
 package com.example.aet_library_qr;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,14 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeAdmin extends AppCompatActivity {
 
     ImageButton bookreturnscanner, studenttransactionscanner, addabook,
             listofbooks, removeabook;
     Button logoutbtnadmin;
+    TextView bookCount, studentCount;
+    DAOBook daoBook;
+    DAOStudent daoStudent;
     FirebaseAuth mAuth;
 
     @Override
@@ -22,7 +31,39 @@ public class HomeAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
 
+        daoBook = new DAOBook();
+        daoStudent = new DAOStudent();
+
         mAuth = FirebaseAuth.getInstance();
+
+        studentCount = (TextView) findViewById(R.id.studentCount);
+        bookCount = (TextView) findViewById(R.id.bookCount);
+
+        daoStudent.getAllStudents(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String studentCountStr = String.valueOf(snapshot.getChildrenCount());
+                studentCount.setText(studentCountStr);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HomeAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        daoBook.getAllBooks(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String bookCountStr = String.valueOf(snapshot.getChildrenCount());
+                bookCount.setText(bookCountStr);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HomeAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         logoutbtnadmin = (Button) findViewById(R.id.logoutbtnadmin);
         logoutbtnadmin.setOnClickListener(new View.OnClickListener() {
