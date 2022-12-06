@@ -37,7 +37,6 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
         Book book = books.get(position);
         holder.cardBookAuthor.setText(book.getAuthor());
         holder.cardBookTitle.setText(book.getTitle());
-        Log.i("SSS2", "" + bookKeys.get(position));
         holder.setKey(bookKeys.get(position));
     }
 

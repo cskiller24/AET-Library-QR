@@ -1,13 +1,18 @@
 package com.example.aet_library_qr;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.aet_library_qr.utils.DateHelpers;
 
 import java.util.ArrayList;
 
@@ -30,9 +35,13 @@ public class BookLogListAdapter extends RecyclerView.Adapter<BookLogListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull BookLogViewHolder holder, int position) {
+        DateHelpers helpers = DateHelpers.getInstance();
         Transaction transaction = transactions.get(position);
         holder.logBookTitle.setText(transaction.getBookTitle());
         holder.logBookAuthor.setText(transaction.getBookAuthor());
+        if(helpers.checkIfExpire(transaction.getBorrowedAt(), transaction.getExpiresAt())) {
+            holder.bookLogCard.setBackgroundColor(Color.parseColor("#f74f4f"));
+        }
     }
 
     @Override
@@ -42,10 +51,12 @@ public class BookLogListAdapter extends RecyclerView.Adapter<BookLogListAdapter.
 
     public static class BookLogViewHolder extends RecyclerView.ViewHolder {
         TextView logBookTitle, logBookAuthor;
+        CardView bookLogCard;
         public BookLogViewHolder(@NonNull View itemView) {
             super(itemView);
             logBookTitle = itemView.findViewById(R.id.logBookTitle);
             logBookAuthor = itemView.findViewById(R.id.logBookAuthor);
+            bookLogCard = itemView.findViewById(R.id.bookLogsCard);
         }
     }
 }

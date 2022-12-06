@@ -1,9 +1,16 @@
 package com.example.aet_library_qr;
 
+import com.example.aet_library_qr.utils.DateHelpers;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Transaction {
     private String bookID, bookTitle, bookAuthor, bookYear, stdID, stdNum, stdName;
+    private String borrowedAt;
+    private String expiresAt;
 
-    public Transaction(){
+    public Transaction() {
 
     }
 
@@ -15,6 +22,9 @@ public class Transaction {
         this.stdID = stdID;
         this.stdNum = stdNum;
         this.stdName = stdName;
+        DateHelpers helpers = DateHelpers.getInstance();
+        this.borrowedAt = helpers.getDateToday();
+        this.expiresAt = helpers.getDateDaysFromNow(7);
     }
 
     public String getBookID() {
@@ -71,5 +81,13 @@ public class Transaction {
 
     public void setStdName(String stdName) {
         this.stdName = stdName;
+    }
+
+    public String getBorrowedAt() {
+        return borrowedAt;
+    }
+
+    public String getExpiresAt() {
+        return expiresAt;
     }
 }

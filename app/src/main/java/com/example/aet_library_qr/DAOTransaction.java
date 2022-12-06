@@ -1,5 +1,7 @@
 package com.example.aet_library_qr;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -13,7 +15,7 @@ public class DAOTransaction {
         databaseReference = db.getReference(Transaction.class.getSimpleName());
     }
 
-    public Task<Void> add(Transaction tran){
+    public Task<Void> add(@NonNull Transaction tran){
         return databaseReference.child(tran.getBookID()+tran.getStdID()).setValue(tran);
     }
 
