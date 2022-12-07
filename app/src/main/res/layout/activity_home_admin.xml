@@ -28,17 +28,17 @@
             app:layout_constraintVertical_bias="0.783" />
 
         <ImageButton
-            android:id="@+id/bookreturnscanner"
+            android:id="@+id/bookborrowscanner"
             android:layout_width="176dp"
             android:layout_height="68dp"
             android:backgroundTint="#0C66CC"
-            android:src="@drawable/bookreturnscan"
+            android:src="@drawable/bookborrowscanner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.102"
+            app:layout_constraintHorizontal_bias="0.101"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.315" />
+            app:layout_constraintVertical_bias="0.383" />
 
         <ImageButton
             android:id="@+id/addabook"
@@ -61,10 +61,10 @@
             android:src="@drawable/listofbooksbutton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.851"
+            app:layout_constraintHorizontal_bias="0.852"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.58" />
+            app:layout_constraintVertical_bias="0.573" />
 
         <ImageButton
             android:id="@+id/removeabook"
@@ -87,23 +87,10 @@
             android:src="@drawable/updateabook"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.102"
+            app:layout_constraintHorizontal_bias="0.101"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.58" />
-
-        <ImageButton
-            android:id="@+id/studenttransactionscanner"
-            android:layout_width="176dp"
-            android:layout_height="68dp"
-            android:backgroundTint="#0C66CC"
-            android:src="@drawable/studenttransactscan"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.851"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.315" />
+            app:layout_constraintVertical_bias="0.573" />
 
         <TextView
             android:id="@+id/studentCount"
