@@ -127,6 +127,10 @@ public class BookInfoAdmin extends AppCompatActivity {
                 bookAuthor.setText(book.getAuthor());
                 bookYearPublished.setText(book.getYearPublished());
                 bookIsAvailable.setText(book.isIs_available() ? "Available" : "Not Available");
+                if(! book.isIs_available()) {
+                    bookInfoUpdateBook.setEnabled(false);
+                    bookInfoDeleteBook.setEnabled(false);
+                }
             }
 
             @Override
