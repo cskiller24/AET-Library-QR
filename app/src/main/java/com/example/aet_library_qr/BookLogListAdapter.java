@@ -39,7 +39,7 @@ public class BookLogListAdapter extends RecyclerView.Adapter<BookLogListAdapter.
         Transaction transaction = transactions.get(position);
         holder.logBookTitle.setText(transaction.getBookTitle());
         holder.logBookAuthor.setText(transaction.getBookAuthor());
-        if(helpers.checkIfExpire(transaction.getBorrowedAt(), transaction.getExpiresAt())) {
+        if(helpers.checkIfExpire(transaction.getExpiresAt())) {
             holder.bookLogCard.setBackgroundColor(Color.parseColor("#f74f4f"));
         }
     }

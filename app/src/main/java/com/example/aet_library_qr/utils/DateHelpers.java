@@ -42,10 +42,11 @@ public class DateHelpers {
     /**
      * Check if date is
      */
-    public boolean checkIfExpire(String borrowed,String expires)
+    public boolean checkIfExpire(String expires)
     {
         try {
-            return Objects.requireNonNull(simpleDateFormat.parse(borrowed)).after(simpleDateFormat.parse(expires));
+            return simpleDateFormat.parse(expires).equals(simpleDateFormat.parse(this.getDateToday())) ||
+                    simpleDateFormat.parse(expires).after(simpleDateFormat.parse(this.getDateToday()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
