@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
 
-    ImageButton bookreturnscanner, studenttransactionscanner, addabook,
+    ImageButton bookborrowscanner, addabook,
             listofbooks, removeabook;
     Button logoutbtnadmin;
     TextView bookCount, studentCount;
@@ -80,8 +80,8 @@ public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
             }
         });
 
-        studenttransactionscanner = findViewById(R.id.studenttransactionscanner);
-        studenttransactionscanner.setOnClickListener(new View.OnClickListener() {
+        bookborrowscanner = findViewById(R.id.bookborrowscanner);
+        bookborrowscanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeActivity(QRScan.class, true);
