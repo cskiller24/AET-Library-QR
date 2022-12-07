@@ -74,7 +74,7 @@ public class QRScan extends AppCompatActivity {
             startActivity(intent);
         }
         if (classType.equals("HomeStudent")) {
-            Intent intent = new Intent(QRScan.this, Student.class);
+            Intent intent = new Intent(QRScan.this, HomeStudent.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }

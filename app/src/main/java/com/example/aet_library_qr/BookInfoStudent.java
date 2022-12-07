@@ -29,29 +29,36 @@ public class BookInfoStudent extends AppCompatActivity {
         textView3.setText(resultID1);
 
         FirebaseDatabase.getInstance()
-            .getReference("Book")
-            .child(resultID1)
-            .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.getValue() != null){
-                        Book info = snapshot.getValue(Book.class);
-                        infoTitle.setText(info.getTitle());
-                        infoAuthor.setText(info.getAuthor());
-                        infoYearPub.setText(info.getYearPublished());
+                .getReference("Book")
+                .child(resultID1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+                            Book info = snapshot.getValue(Book.class);
+                            infoTitle.setText(info.getTitle());
+                            infoAuthor.setText(info.getAuthor());
+                            infoYearPub.setText(info.getYearPublished());
+                        } else {
+                            Toast.makeText(BookInfoStudent.this, "Book does not exist", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(BookInfoStudent.this, HomeAdmin.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
-                    else{
-                        Toast.makeText(BookInfoStudent.this, "Book does not exist", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(BookInfoStudent.this, HomeAdmin.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(BookInfoStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(BookInfoStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(BookInfoStudent.this, HomeStudent.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
