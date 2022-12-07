@@ -3,30 +3,30 @@ package com.example.aet_library_qr;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aet_library_qr.Contracts.RefreshInterface;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.internal.InternalTokenProvider;
 
-import org.w3c.dom.Text;
-
-public class BookInfoAdmin extends AppCompatActivity {
+public class BookInfoAdmin extends AppCompatActivity implements RefreshInterface {
 
     TextView bookTitle;
     TextView bookAuthor;
     TextView bookYearPublished;
     TextView bookIsAvailable;
     Button generateQR, bookInfoUpdateBook, bookInfoDeleteBook;
+    String key;
+    SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,8 @@ public class BookInfoAdmin extends AppCompatActivity {
             Toast.makeText(BookInfoAdmin.this, "Cannot search the book", Toast.LENGTH_SHORT).show();
             return;
         }
-        String key = intent.getStringExtra("key");
-        getBook(key);
+        key = intent.getStringExtra("key");
+        getData();
 
         generateQR.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,14 +105,21 @@ public class BookInfoAdmin extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 }).show();
+            }
+        });
 
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshBookInfoAdmin);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                refreshLayout.setRefreshing(false);
             }
         });
     }
 
     private void getBook(String key) {
         DAOBook daoBook = new DAOBook();
-
         daoBook.getBook(key, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -130,12 +137,15 @@ public class BookInfoAdmin extends AppCompatActivity {
                 if(! book.isIs_available()) {
                     bookInfoUpdateBook.setEnabled(false);
                     bookInfoDeleteBook.setEnabled(false);
+                } else {
+                    bookInfoUpdateBook.setEnabled(true);
+                    bookInfoDeleteBook.setEnabled(true);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(BookInfoAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -151,4 +161,8 @@ public class BookInfoAdmin extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void getData() {
+        getBook(this.key);
+    }
 }

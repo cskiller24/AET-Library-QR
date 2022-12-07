@@ -39,8 +39,11 @@ public class BookLogListAdapter extends RecyclerView.Adapter<BookLogListAdapter.
         Transaction transaction = transactions.get(position);
         holder.logBookTitle.setText(transaction.getBookTitle());
         holder.logBookAuthor.setText(transaction.getBookAuthor());
+        holder.logExpireDate.setText(transaction.getExpiresAt());
         if(helpers.checkIfExpire(transaction.getExpiresAt())) {
             holder.bookLogCard.setBackgroundColor(Color.parseColor("#f74f4f"));
+        } else {
+            holder.bookLogCard.setBackgroundColor(Color.parseColor("#ffffff"));
         }
     }
 
@@ -50,13 +53,14 @@ public class BookLogListAdapter extends RecyclerView.Adapter<BookLogListAdapter.
     }
 
     public static class BookLogViewHolder extends RecyclerView.ViewHolder {
-        TextView logBookTitle, logBookAuthor;
+        TextView logBookTitle, logBookAuthor, logExpireDate;
         CardView bookLogCard;
         public BookLogViewHolder(@NonNull View itemView) {
             super(itemView);
             logBookTitle = itemView.findViewById(R.id.logBookTitle);
             logBookAuthor = itemView.findViewById(R.id.logBookAuthor);
             bookLogCard = itemView.findViewById(R.id.bookLogsCard);
+            logExpireDate = itemView.findViewById(R.id.logExpireDate);
         }
     }
 }

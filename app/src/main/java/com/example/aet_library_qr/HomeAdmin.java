@@ -2,6 +2,7 @@ package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aet_library_qr.Contracts.RefreshInterface;
 import com.example.aet_library_qr.utils.DateHelpers;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,12 +24,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class HomeAdmin extends AppCompatActivity {
+public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
 
     ImageButton bookreturnscanner, studenttransactionscanner, addabook,
             listofbooks, removeabook;
     Button logoutbtnadmin;
     TextView bookCount, studentCount;
+    SwipeRefreshLayout refreshLayout;
     DAOBook daoBook;
     DAOStudent daoStudent;
     FirebaseAuth mAuth;
@@ -42,34 +45,10 @@ public class HomeAdmin extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        getData();
+
         studentCount = (TextView) findViewById(R.id.studentCount);
         bookCount = (TextView) findViewById(R.id.bookCount);
-
-        daoStudent.getAllStudents(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String studentCountStr = String.valueOf(snapshot.getChildrenCount());
-                studentCount.setText(studentCountStr);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(HomeAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        daoBook.getAllBooks(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String bookCountStr = String.valueOf(snapshot.getChildrenCount());
-                bookCount.setText(bookCountStr);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(HomeAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         logoutbtnadmin = (Button) findViewById(R.id.logoutbtnadmin);
         logoutbtnadmin.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +87,15 @@ public class HomeAdmin extends AppCompatActivity {
                 changeActivity(QRScan.class, true);
             }
         });
+
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshHomeAdmin);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                refreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void logout() {
@@ -125,5 +113,41 @@ public class HomeAdmin extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    private void setStudentCount() {
+        daoStudent.getAllStudents(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String studentCountStr = String.valueOf(snapshot.getChildrenCount());
+                studentCount.setText(studentCountStr);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HomeAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void setBookCount() {
+        daoBook.getAllBooks(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String bookCountStr = String.valueOf(snapshot.getChildrenCount());
+                bookCount.setText(bookCountStr);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HomeAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void getData() {
+        setBookCount();
+        setStudentCount();
     }
 }

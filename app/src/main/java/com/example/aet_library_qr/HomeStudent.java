@@ -2,6 +2,7 @@ package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aet_library_qr.Contracts.RefreshInterface;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,12 +20,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class HomeStudent extends AppCompatActivity {
+public class HomeStudent extends AppCompatActivity implements RefreshInterface {
 
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
     ImageButton findabookbutton, updateprofilestudent;
 
     Button logoutstudent, generateStudentQrBtn, bookLogs, btnChangePass;
+
+    SwipeRefreshLayout refreshLayout;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -45,43 +49,13 @@ public class HomeStudent extends AppCompatActivity {
         infoage = findViewById(R.id.infoage);
         infostudentnum = findViewById(R.id.infostudentnum);
 
-        findabookbutton = findViewById(R.id.findabookbutton);
-        logoutstudent = findViewById(R.id.logoutstudent);
-        updateprofilestudent = findViewById(R.id.updateprofilestudent);
-        bookLogs = findViewById(R.id.bookLogsBtn);
 
         if (mAuth.getUid() != null) {
             currentuser = mAuth.getUid();
         }
+        getData();
 
-        FirebaseDatabase.getInstance()
-                .getReference()
-                .child("Student")
-                .child(currentuser)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getValue() != null) {
-                            Student info = snapshot.getValue(Student.class);
-                            String name = info.getFname() + " " + info.getMname() + ". " + info.getLname();
-                            infoname.setText(name);
-                            infoemail.setText(info.getEmail());
-                            infocdept.setText(info.getCdept());
-                            infoyrlevel.setText(info.getYrlevel());
-                            infoage.setText(info.getAge());
-                            infostudentnum.setText(info.getStdnum());
-                        } else {
-                            Toast.makeText(HomeStudent.this, "No Data Available", Toast.LENGTH_SHORT).show();
-                            logout();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(HomeStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+        findabookbutton = findViewById(R.id.findabookbutton);
         findabookbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +63,7 @@ public class HomeStudent extends AppCompatActivity {
             }
         });
 
-
+        logoutstudent = findViewById(R.id.logoutstudent);
         logoutstudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +71,7 @@ public class HomeStudent extends AppCompatActivity {
             }
         });
 
+        updateprofilestudent = findViewById(R.id.updateprofilestudent);
         updateprofilestudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +88,7 @@ public class HomeStudent extends AppCompatActivity {
             }
         });
 
+        bookLogs = findViewById(R.id.bookLogsBtn);
         bookLogs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +104,14 @@ public class HomeStudent extends AppCompatActivity {
             }
         });
 
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshHomeStudent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                refreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void changePassword() {
@@ -156,5 +140,36 @@ public class HomeStudent extends AppCompatActivity {
     private void bookLogs() {
         Intent intent = new Intent(HomeStudent.this, BookLogsStudent.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void getData() {
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Student")
+                .child(currentuser)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+                            Student info = snapshot.getValue(Student.class);
+                            String name = info.getFname() + " " + info.getMname() + ". " + info.getLname();
+                            infoname.setText(name);
+                            infoemail.setText(info.getEmail());
+                            infocdept.setText(info.getCdept());
+                            infoyrlevel.setText(info.getYrlevel());
+                            infoage.setText(info.getAge());
+                            infostudentnum.setText(info.getStdnum());
+                        } else {
+                            Toast.makeText(HomeStudent.this, "No Data Available", Toast.LENGTH_SHORT).show();
+                            logout();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(HomeStudent.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
