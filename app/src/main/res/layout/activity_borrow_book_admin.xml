@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0c66cc"
     tools:context=".BookInfoStudent">
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:textColor="@color/black"
         android:textAllCaps="true"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -36,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="is_available?"
+        android:textColor="#232b2b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -47,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Year Published"
+        android:textColor="#232b2b"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +63,7 @@
         android:id="@+id/tvaAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#232b2b"
         android:text="Author"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -78,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.661" />
+        app:layout_constraintVertical_bias="0.673" />
 
     <Button
         android:id="@+id/btnBorrow"

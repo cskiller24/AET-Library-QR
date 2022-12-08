@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+c<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0c66cc"
     tools:context=".UpdateBookAdmin">
 
     <TextView
@@ -12,17 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
         android:text="Year Published"
+        android:textColor="#fcac3d"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/bookUpdateYearPublished"
         app:layout_constraintEnd_toEndOf="@+id/bookUpdateAuthor"
         app:layout_constraintStart_toStartOf="@+id/bookUpdateAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/bookUpdateAuthor" />
+        app:layout_constraintTop_toBottomOf="@+id/bookUpdateAuthor"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:textColor="#fcac3d"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/bookUpdateTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="47dp"
         android:text="Author"
+        android:textColor="#fcac3d"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/bookUpdateAuthor"
         app:layout_constraintEnd_toEndOf="@+id/bookUpdateTitle"
@@ -90,8 +95,8 @@
         android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/bookUpdateYearPublished"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/bookUpdateYearPublished"
         app:layout_constraintTop_toBottomOf="@+id/bookUpdateYearPublished"
-        app:layout_constraintVertical_bias="0.099" />
+        app:layout_constraintVertical_bias="0.261" />
 </androidx.constraintlayout.widget.ConstraintLayout>
