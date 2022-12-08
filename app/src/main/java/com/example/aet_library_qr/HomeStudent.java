@@ -23,9 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeStudent extends AppCompatActivity implements RefreshInterface {
 
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
-    ImageButton findabookbutton, updateprofilestudent, btnChangePass;
+    ImageButton findabookbutton, updateprofilestudent, btnChangePass, generateStudentQrBtn, bookLogsBtn;
 
-    Button logoutstudent, generateStudentQrBtn, bookLogs;
+    Button logoutstudent, bookLogs;
 
     SwipeRefreshLayout refreshLayout;
 
@@ -80,7 +80,7 @@ public class HomeStudent extends AppCompatActivity implements RefreshInterface {
             }
         });
 
-        generateStudentQrBtn = (Button) findViewById(R.id.generateStudentQrBtn);
+        generateStudentQrBtn = findViewById(R.id.generateStudentQrBtn);
         generateStudentQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,8 +88,8 @@ public class HomeStudent extends AppCompatActivity implements RefreshInterface {
             }
         });
 
-        bookLogs = findViewById(R.id.bookLogsBtn);
-        bookLogs.setOnClickListener(new View.OnClickListener() {
+        bookLogsBtn = findViewById(R.id.bookLogsBtn);
+        bookLogsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bookLogs();
@@ -104,7 +104,7 @@ public class HomeStudent extends AppCompatActivity implements RefreshInterface {
             }
         });
 
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshHomeStudent);
+        refreshLayout = findViewById(R.id.refreshHomeStudent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

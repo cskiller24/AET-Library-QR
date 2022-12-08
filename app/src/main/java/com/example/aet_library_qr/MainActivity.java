@@ -2,11 +2,13 @@ package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,9 +49,23 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        if (mAuth.getCurrentUser() != null) {
-            sendUserToNextActivity();
-            return;
+       if (mAuth.getCurrentUser() != null) {
+           if(mUser.isEmailVerified() == false){
+               AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+               builder.setTitle("Notice");
+               builder.setMessage("Email not verified");
+               builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                       Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                       dialog.dismiss();
+                   }
+               }).show();
+           }
+           else {
+               sendUserToNextActivity();
+               return;
+           }
         }
         // Early return nalang para hindi madaming indents
         loginbtn = findViewById(R.id.loginbtn);

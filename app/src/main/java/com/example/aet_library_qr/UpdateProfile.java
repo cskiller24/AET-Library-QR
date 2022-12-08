@@ -2,11 +2,15 @@ package com.example.aet_library_qr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +24,12 @@ public class UpdateProfile extends AppCompatActivity {
     TextView tvEmail;
     EditText createlname, createfname, createmname, createstudentnum, createage;
     Spinner createcollege, createyrlvl2;
-    Button btngo, btnout, btnChangePass;
+    Button btngo, btnout;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,22 @@ public class UpdateProfile extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+
+
+        if(mUser.isEmailVerified() == false){
+            AlertDialog.Builder builder = new AlertDialog.Builder(UpdateProfile.this);
+            builder.setTitle("Notice");
+            builder.setMessage("Email not verified");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(UpdateProfile.this, MainActivity.class);
+                    Toast.makeText(UpdateProfile.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+            }).show();
+        }
 
         String Email1 = getIntent().getExtras().getString("email");
         String uid = getIntent().getExtras().getString("uid");
@@ -88,12 +110,6 @@ public class UpdateProfile extends AppCompatActivity {
             Intent intent=new Intent(UpdateProfile.this, MainActivity.class);
             startActivity(intent);
             finish();
-        });
-
-        btnChangePass = findViewById(R.id.btnChangePass);
-        btnChangePass.setOnClickListener(v ->{
-            Intent intent=new Intent(UpdateProfile.this, ChangePassword.class);
-            startActivity(intent);
         });
 
     }

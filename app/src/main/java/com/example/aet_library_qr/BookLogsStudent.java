@@ -61,8 +61,8 @@ public class BookLogsStudent extends AppCompatActivity implements RefreshInterfa
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Transaction transaction1 = dataSnapshot.getValue(Transaction.class);
-                    transactions.add(transaction1);
+                        Transaction transaction1 = dataSnapshot.getValue(Transaction.class);
+                        transactions.add(transaction1);
                 }
                 adapter.notifyDataSetChanged();
             }
