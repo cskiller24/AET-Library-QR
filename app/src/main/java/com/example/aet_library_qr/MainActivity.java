@@ -110,9 +110,24 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        sendUserToNextActivity();
-                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        if(mUser.isEmailVerified() == false){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Notice");
+                            builder.setMessage("Email not verified");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                            progressDialog.dismiss();
+                        }
+                        else {
+                            progressDialog.dismiss();
+                            sendUserToNextActivity();
+                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
