@@ -110,27 +110,45 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        if(mUser.isEmailVerified() == false){
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setTitle("Notice");
-                            builder.setMessage("Email not verified");
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                }
-                            }).show();
-                            progressDialog.dismiss();
-                        }
-                        else {
-                            progressDialog.dismiss();
-                            sendUserToNextActivity();
-                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+                        String adminUID = FirebaseAuth.getInstance().getUid();
+                        FirebaseDatabase.getInstance()
+                                .getReference("Admin")
+                                .child(adminUID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.getValue() == null) {
+                                            mAuth = FirebaseAuth.getInstance();
+                                            mUser = mAuth.getCurrentUser();
+                                            if (mUser.isEmailVerified() == false) {
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                                builder.setTitle("Notice");
+                                                builder.setMessage("Email not verified");
+                                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                                                        dialog.dismiss();
+                                                    }
+                                                }).show();
+                                                progressDialog.dismiss();
+                                            } else {
+                                                progressDialog.dismiss();
+                                                sendUserToNextActivity();
+                                                Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        else{
+                                            progressDialog.dismiss();
+                                            sendUserToNextActivity();
+                                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Toast.makeText(MainActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }
                 }
             });
@@ -139,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendUserToNextActivity() {
         // Re-instantiate
-        String currentuid = FirebaseAuth.getInstance().getUid();;
+        String currentuid = FirebaseAuth.getInstance().getUid();
         FirebaseDatabase.getInstance()
                 .getReference("Admin")
                 .child(currentuid)
