@@ -34,7 +34,8 @@ public class ListOfBooksAdmin extends AppCompatActivity implements RefreshInterf
         daoBook = new DAOBook();
         books = new ArrayList<>();
         bookKeys = new ArrayList<>();
-        adapter = new BookListAdapter(ListOfBooksAdmin.this, books, bookKeys);
+        String redirectType = getIntent().getStringExtra("redirectType").toString();
+        adapter = new BookListAdapter(ListOfBooksAdmin.this, books, bookKeys, redirectType);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ListOfBooksAdmin.this));
         recyclerView.setAdapter(adapter);

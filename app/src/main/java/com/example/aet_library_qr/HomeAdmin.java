@@ -27,7 +27,7 @@ import java.util.Calendar;
 public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
 
     ImageButton bookborrowscanner, addabook,
-            listofbooks, removeabook;
+            listofbooks, removeabook, updateabook;
     Button logoutbtnadmin;
     TextView bookCount, studentCount;
     SwipeRefreshLayout refreshLayout;
@@ -68,7 +68,19 @@ public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
         removeabook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeActivity(RemoveBookAdmin.class, true);
+                Intent intent = new Intent(HomeAdmin.this, ListOfBooksAdmin.class);
+                intent.putExtra("redirectType", "REMOVE");
+                startActivity(intent);
+            }
+        });
+
+        updateabook = (ImageButton) findViewById(R.id.updateabook);
+        updateabook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeAdmin.this, ListOfBooksAdmin.class);
+                intent.putExtra("redirectType", "UPDATE");
+                startActivity(intent);
             }
         });
 
@@ -76,7 +88,9 @@ public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
         listofbooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeActivity(ListOfBooksAdmin.class, true);
+                Intent intent = new Intent(HomeAdmin.this, ListOfBooksAdmin.class);
+                intent.putExtra("redirectType", "VIEW");
+                startActivity(intent);
             }
         });
 
@@ -87,6 +101,8 @@ public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
                 changeActivity(QRScan.class, true);
             }
         });
+
+
 
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshHomeAdmin);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

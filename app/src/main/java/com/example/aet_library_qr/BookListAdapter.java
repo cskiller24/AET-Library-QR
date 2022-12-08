@@ -18,18 +18,20 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
     Context context;
     ArrayList<Book> books;
     ArrayList<String> bookKeys;
+    String redirectType;
 
-    public BookListAdapter(Context context, ArrayList<Book> books, ArrayList<String> bookKeys) {
+    public BookListAdapter(Context context, ArrayList<Book> books, ArrayList<String> bookKeys, String redirect) {
         this.context = context;
         this.books = books;
         this.bookKeys = bookKeys;
+        this.redirectType = redirect;
     }
 
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.book_list_card, parent, false);
-        return new BookViewHolder(view);
+        return new BookViewHolder(view, this.redirectType);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
         String key;
         private final Context context;
 
-        public BookViewHolder(@NonNull View itemView) {
+        public BookViewHolder(@NonNull View itemView, String redirectType) {
             super(itemView);
             context = itemView.getContext();
             cardBookAuthor = itemView.findViewById(R.id.cardBookAuthor);
@@ -62,9 +64,20 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
             bookCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, BookInfoAdmin.class);
-                    intent.putExtra("key", getKey());
-                    context.startActivity(intent);
+                    Log.i("REDIRECT_TYPE", redirectType);
+                    if(redirectType.equals("UPDATE")) {
+                        Intent intent = new Intent(context, UpdateBookAdmin.class);
+                        intent.putExtra("key", getKey());
+                        context.startActivity(intent);
+                    } else if(redirectType.equals("REMOVE")) {
+                        Intent intent = new Intent(context, RemoveBookAdmin.class);
+                        intent.putExtra("key", getKey());
+                        context.startActivity(intent);
+                    } else if(redirectType.equals("VIEW")) {
+                        Intent intent = new Intent(context, BookInfoAdmin.class);
+                        intent.putExtra("key", getKey());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }
