@@ -23,9 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeStudent extends AppCompatActivity implements RefreshInterface {
 
     TextView infoname, infoemail, infocdept, infoyrlevel, infoage, infostudentnum;
-    ImageButton findabookbutton, updateprofilestudent;
+    ImageButton findabookbutton, updateprofilestudent, btnChangePass;
 
-    Button logoutstudent, generateStudentQrBtn, bookLogs, btnChangePass;
+    Button logoutstudent, generateStudentQrBtn, bookLogs;
 
     SwipeRefreshLayout refreshLayout;
 
