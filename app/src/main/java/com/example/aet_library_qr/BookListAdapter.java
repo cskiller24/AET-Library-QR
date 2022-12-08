@@ -1,18 +1,22 @@
 package com.example.aet_library_qr;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookViewHolder> {
     Context context;
@@ -70,9 +74,28 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
                         intent.putExtra("key", getKey());
                         context.startActivity(intent);
                     } else if(redirectType.equals("REMOVE")) {
-                        Intent intent = new Intent(context, RemoveBookAdmin.class);
-                        intent.putExtra("key", getKey());
-                        context.startActivity(intent);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Delete book");
+                        builder.setMessage("Are you sure you want to delete?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DAOBook daoBook = new DAOBook();
+                                daoBook.deleteBook(key).addOnSuccessListener(suc -> {
+                                    Intent homeAdmin = new Intent(context, HomeAdmin.class);
+                                    Toast.makeText(context, "Book deleted", Toast.LENGTH_SHORT).show();
+                                    context.startActivity(homeAdmin);
+                                }).addOnFailureListener(err -> {
+                                    Toast.makeText(context, "" + err.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                            }
+                        });
+
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }).show();
                     } else if(redirectType.equals("VIEW")) {
                         Intent intent = new Intent(context, BookInfoAdmin.class);
                         intent.putExtra("key", getKey());
