@@ -24,6 +24,7 @@ public class ForgotpwActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     FirebaseAuth mAuth;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class ForgotpwActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgotpw);
         resetemail = findViewById(R.id.resetemail);
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        progressDialog = new ProgressDialog(this);
 
         btnreset = findViewById(R.id.btnreset);
         btnreset.setOnClickListener(new View.OnClickListener() {
@@ -44,23 +48,26 @@ public class ForgotpwActivity extends AppCompatActivity {
 
     private void PerformReset() {
         String email = resetemail.getText().toString().trim();
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             Toast.makeText(ForgotpwActivity.this, "Please check your email", Toast.LENGTH_SHORT).show();
             return;
         }
         else{
-
+        progressDialog.setMessage("Sending link to your email");
+        progressDialog.setTitle("Reset Password");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         mAuth.setLanguageCode("en");
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-
+                    progressDialog.dismiss();
                     Toast.makeText(ForgotpwActivity.this, "Please check your email", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ForgotpwActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-
+                    progressDialog.dismiss();
                     Toast.makeText(ForgotpwActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
                 }
 

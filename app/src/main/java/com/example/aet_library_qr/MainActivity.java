@@ -49,23 +49,25 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-       if (mAuth.getCurrentUser() != null) {
-           if(mUser.isEmailVerified() == false){
-               AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-               builder.setTitle("Notice");
-               builder.setMessage("Email not verified");
-               builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialog, int which) {
-                       Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
-                       dialog.dismiss();
-                   }
-               }).show();
-           }
-           else {
-               sendUserToNextActivity();
-               return;
-           }
+        if (mAuth.getCurrentUser() != null) {
+            if (mUser.isEmailVerified() == false) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Notice");
+                builder.setMessage("Email not verified");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }).show();
+            }
+            else{
+                sendUserToNextActivity();
+            }
+        } else {
+            sendUserToNextActivity();
+            return;
         }
         // Early return nalang para hindi madaming indents
         loginbtn = findViewById(R.id.loginbtn);
