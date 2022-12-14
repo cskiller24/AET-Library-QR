@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aet_library_qr.Contracts.RefreshInterface;
@@ -24,6 +23,7 @@ public class ListOfBooksAdmin extends AppCompatActivity implements RefreshInterf
     BookListAdapter adapter;
     SwipeRefreshLayout refreshLayout;
     DAOBook daoBook;
+    String redirectType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class ListOfBooksAdmin extends AppCompatActivity implements RefreshInterf
         daoBook = new DAOBook();
         books = new ArrayList<>();
         bookKeys = new ArrayList<>();
-        String redirectType = getIntent().getStringExtra("redirectType").toString();
+        redirectType = getIntent().getStringExtra("redirectType");
         adapter = new BookListAdapter(ListOfBooksAdmin.this, books, bookKeys, redirectType);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ListOfBooksAdmin.this));
@@ -61,8 +61,16 @@ public class ListOfBooksAdmin extends AppCompatActivity implements RefreshInterf
                 for (DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     Book book = dataSnapshot.getValue(Book.class);
-                    books.add(book);
-                    bookKeys.add(dataSnapshot.getKey());
+                    if(redirectType.equals("UPDATE") && book.isIs_available() ) {
+                        books.add(book);
+                        bookKeys.add(dataSnapshot.getKey());
+                    } else if (redirectType.equals("REMOVE") && book.isIs_available()) {
+                        books.add(book);
+                        bookKeys.add(dataSnapshot.getKey());
+                    } else if (redirectType.equals("VIEW")) {
+                        books.add(book);
+                        bookKeys.add(dataSnapshot.getKey());
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

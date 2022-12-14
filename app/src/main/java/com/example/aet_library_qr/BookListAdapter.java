@@ -3,7 +3,6 @@ package com.example.aet_library_qr;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,12 +66,11 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
             bookCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i("REDIRECT_TYPE", redirectType);
-                    if(redirectType.equals("UPDATE")) {
+                    if (redirectType.equals("UPDATE")) {
                         Intent intent = new Intent(context, UpdateBookAdmin.class);
                         intent.putExtra("key", getKey());
                         context.startActivity(intent);
-                    } else if(redirectType.equals("REMOVE")) {
+                    } else if (redirectType.equals("REMOVE")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setTitle("Delete book");
                         builder.setMessage("Are you sure you want to delete?");
@@ -97,7 +95,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
                                 dialogInterface.dismiss();
                             }
                         }).show();
-                    } else if(redirectType.equals("VIEW")) {
+                    } else if (redirectType.equals("VIEW")) {
                         Intent intent = new Intent(context, BookInfoAdmin.class);
                         intent.putExtra("key", getKey());
                         context.startActivity(intent);
