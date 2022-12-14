@@ -10,9 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,10 +22,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
@@ -60,12 +54,12 @@ public class GenerateQrAdmin extends AppCompatActivity {
         qrSaveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadImage2();
+                downloadImage();
             }
         });
     }
 
-    private void downloadImage2() {
+    private void downloadImage() {
         Uri images = null;
         ContentResolver resolver = getContentResolver();
 
@@ -96,38 +90,6 @@ public class GenerateQrAdmin extends AppCompatActivity {
             Toast.makeText(GenerateQrAdmin.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-    }
-
-    private void downloadImage() {
-        // Working but not recommended
-        BitmapDrawable drawable = (BitmapDrawable) qrCodeImage.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-        String path = getApplicationContext().getExternalFilesDir(null).toString() +"/images/"+ System.currentTimeMillis()+".jpg";
-        File file = new File(path);
-        file.getParentFile().mkdir();
-        try {
-            OutputStream fileOutputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        File dir = new File(path);
-//        if (!dir.exists()) {
-//            dir.mkdirs();
-//        }
-//        File file = new File(dir, System.currentTimeMillis()+".png");
-//        try(FileOutputStream outputStream = new FileOutputStream(file)) {
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-//            outputStream.flush();
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Toast.makeText(GenerateQrAdmin.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//            e.printStackTrace();
-//        }
-
     }
 
     private void generateQr(String key)

@@ -6,7 +6,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,15 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aet_library_qr.Contracts.RefreshInterface;
-import com.example.aet_library_qr.utils.DateHelpers;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class HomeAdmin extends AppCompatActivity implements RefreshInterface {
 

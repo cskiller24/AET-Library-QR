@@ -2,8 +2,6 @@ package com.example.aet_library_qr;
 
 import com.example.aet_library_qr.utils.DateHelpers;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class Transaction {
     private String bookID, bookTitle, bookAuthor, bookYear, stdID, stdNum, stdName;

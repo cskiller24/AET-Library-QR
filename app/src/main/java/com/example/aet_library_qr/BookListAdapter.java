@@ -16,7 +16,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookViewHolder> {
     Context context;
@@ -88,12 +87,14 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
                                 }).addOnFailureListener(err -> {
                                     Toast.makeText(context, "" + err.getMessage(), Toast.LENGTH_SHORT).show();
                                 });
+                                dialogInterface.dismiss();
                             }
                         });
 
                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
                             }
                         }).show();
                     } else if(redirectType.equals("VIEW")) {

@@ -1,10 +1,8 @@
 package com.example.aet_library_qr;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -132,7 +130,7 @@ public class BorrowBookAdmin extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                Toast.makeText(BorrowBookAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
 
