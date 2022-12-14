@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         if (mAuth.getCurrentUser() != null) {
-            if (mUser.isEmailVerified() == false) {
+            if (! mUser.isEmailVerified()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Notice");
                 builder.setMessage("Email not verified");
@@ -65,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
             else{
                 sendUserToNextActivity();
             }
-        } else {
-            sendUserToNextActivity();
-            return;
         }
         // Early return nalang para hindi madaming indents
         loginbtn = findViewById(R.id.loginbtn);
@@ -185,8 +183,7 @@ public class MainActivity extends AppCompatActivity {
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
                                                 return;
-                                            }
-                                            else{
+                                            } else{
                                                 Intent intent = new Intent(MainActivity.this, HomeStudent.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
@@ -200,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                                             Toast.makeText(MainActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
-
                         }
                         else {
                             Intent intent = new Intent(MainActivity.this, HomeAdmin.class);
