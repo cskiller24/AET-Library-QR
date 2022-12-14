@@ -9,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,11 +19,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     EditText username, password2;
@@ -51,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         if (mAuth.getCurrentUser() != null) {
-            if (! mUser.isEmailVerified()) {
+            if (!mUser.isEmailVerified()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Notice");
-                builder.setMessage("Email not verified");
+                builder.setMessage("Email not verified, Resend Verification Email");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Verification Email Has Been Sent", Toast.LENGTH_SHORT).show();
+                        mAuth.signOut();
                         dialog.dismiss();
                     }
                 }).show();
@@ -110,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        //Need talaga i Verify si Admin
+                        //Or use another account for admin testing/presentation purposes
+                        //I will remove this block
                         String adminUID = FirebaseAuth.getInstance().getUid();
                         FirebaseDatabase.getInstance()
                                 .getReference("Admin")
@@ -122,11 +128,12 @@ public class MainActivity extends AppCompatActivity {
                                             if (mUser.isEmailVerified() == false) {
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                                 builder.setTitle("Notice");
-                                                builder.setMessage("Email not verified");
+                                                builder.setMessage("Email not verified, Resend Verification Email");
                                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
-                                                        Toast.makeText(MainActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MainActivity.this, "Verification Email Has Been Sent", Toast.LENGTH_SHORT).show();
+                                                        mAuth.signOut();
                                                         dialog.dismiss();
                                                     }
                                                 }).show();
@@ -136,8 +143,7 @@ public class MainActivity extends AppCompatActivity {
                                                 sendUserToNextActivity();
                                                 Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                             }
-                                        }
-                                        else{
+                                        } else {
                                             progressDialog.dismiss();
                                             sendUserToNextActivity();
                                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
@@ -149,6 +155,14 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                    } else {
+                        progressDialog.dismiss();
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (FirebaseAuthUserCollisionException e) {
+                        } catch (Exception e) {
+                            Toast.makeText(MainActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
@@ -164,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                         if (snapshot.getValue() == null) {
                             //needs to put user with no data to update first
                             FirebaseDatabase.getInstance()
@@ -183,7 +196,8 @@ public class MainActivity extends AppCompatActivity {
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
                                                 return;
-                                            } else{
+                                            }
+                                            else{
                                                 Intent intent = new Intent(MainActivity.this, HomeStudent.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
@@ -197,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                                             Toast.makeText(MainActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
+
                         }
                         else {
                             Intent intent = new Intent(MainActivity.this, HomeAdmin.class);
