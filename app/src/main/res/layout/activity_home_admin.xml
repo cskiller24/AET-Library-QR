@@ -27,70 +27,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.783" />
 
-        <ImageButton
-            android:id="@+id/bookborrowscanner"
-            android:layout_width="176dp"
-            android:layout_height="68dp"
-            android:backgroundTint="#0C66CC"
-            android:src="@drawable/bookborrowscanner"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.102"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.319" />
 
-        <ImageButton
-            android:id="@+id/addabook"
-            android:layout_width="176dp"
-            android:layout_height="68dp"
-            android:backgroundTint="#0C66CC"
-            android:src="@drawable/addabook"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.102"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.42" />
 
-        <ImageButton
-            android:id="@+id/listofbooks"
-            android:layout_width="176dp"
-            android:layout_height="68dp"
-            android:backgroundTint="#0C66CC"
-            android:src="@drawable/listofbooksbutton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.855"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.318" />
 
-        <ImageButton
-            android:id="@+id/removeabook"
-            android:layout_width="176dp"
-            android:layout_height="68dp"
-            android:backgroundTint="#0C66CC"
-            android:src="@drawable/removeabook"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.855"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.419" />
 
-        <ImageButton
-            android:id="@+id/updateabook"
-            android:layout_width="176dp"
-            android:layout_height="68dp"
-            android:backgroundTint="#0C66CC"
-            android:src="@drawable/updateabook"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.855"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.521" />
+
+
+
+
+
 
         <TextView
             android:id="@+id/studentCount"
@@ -145,5 +90,100 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.213" />
+
+<!--Navigation Buttons-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.389">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/bookborrowscanner"
+                    android:layout_width="176dp"
+                    android:layout_height="68dp"
+                    android:backgroundTint="#0C66CC"
+                    android:src="@drawable/bookborrowscanner"
+                     />
+
+                <ImageButton
+                    android:id="@+id/listofbooks"
+                    android:layout_width="176dp"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="-3dp"
+                    android:backgroundTint="#0C66CC"
+                    android:src="@drawable/listofbooksbutton"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.855"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.318" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/addabook"
+                    android:layout_width="176dp"
+                    android:layout_height="68dp"
+                    android:backgroundTint="#0C66CC"
+                    android:src="@drawable/addabook"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.102"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.42" />
+
+                <ImageButton
+                    android:id="@+id/removeabook"
+                    android:layout_width="176dp"
+                    android:layout_height="68dp"
+                    android:backgroundTint="#0C66CC"
+                    android:src="@drawable/removeabook"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.855"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.419" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/updateabook"
+                    android:layout_width="176dp"
+                    android:layout_height="68dp"
+                    android:backgroundTint="#0C66CC"
+                    android:src="@drawable/updateabook"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.855"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.521" />
+            </LinearLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
