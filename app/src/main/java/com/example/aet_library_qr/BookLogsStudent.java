@@ -8,6 +8,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aet_library_qr.Contracts.RefreshInterface;
@@ -15,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +31,7 @@ public class BookLogsStudent extends AppCompatActivity implements RefreshInterfa
     SwipeRefreshLayout refreshLayout;
     DAOTransaction transaction;
     String uid;
+    TextView tvNoBookLogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class BookLogsStudent extends AppCompatActivity implements RefreshInterfa
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
         recyclerView.setAdapter(adapter);
+        tvNoBookLogs = (TextView) findViewById(R.id.noBookLogs);
         getData();
 
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshBookLogsStudent);
@@ -63,6 +69,12 @@ public class BookLogsStudent extends AppCompatActivity implements RefreshInterfa
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Transaction transaction1 = dataSnapshot.getValue(Transaction.class);
                         transactions.add(transaction1);
+                }
+
+                if(transactions.isEmpty()) {
+                    tvNoBookLogs.setVisibility(View.VISIBLE);
+                } else {
+                    tvNoBookLogs.setVisibility(View.GONE);
                 }
                 adapter.notifyDataSetChanged();
             }

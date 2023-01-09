@@ -42,8 +42,14 @@ public class BookLogListAdapter extends RecyclerView.Adapter<BookLogListAdapter.
         holder.logExpireDate.setText(transaction.getExpiresAt());
         if(helpers.checkIfExpire(transaction.getExpiresAt())) {
             holder.bookLogCard.setBackgroundColor(Color.parseColor("#f74f4f"));
+            holder.logBookTitle.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.logBookAuthor.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.logExpireDate.setTextColor(Color.parseColor("#FFFFFF"));
         } else {
             holder.bookLogCard.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.logBookTitle.setTextColor(Color.parseColor("#000000"));
+            holder.logBookAuthor.setTextColor(Color.parseColor("#000000"));
+            holder.logExpireDate.setTextColor(Color.parseColor("#000000"));
         }
     }
 

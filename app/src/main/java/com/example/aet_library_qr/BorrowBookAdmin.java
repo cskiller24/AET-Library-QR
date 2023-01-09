@@ -3,6 +3,7 @@ package com.example.aet_library_qr;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 
 public class BorrowBookAdmin extends AppCompatActivity {
 
-    TextView tvaKey, tvaTitle, tvaAuthor, tvaYear, tvaAvail;
+    TextView tvaTitle, tvaAuthor, tvaYear, tvaAvail;
     Button btnBorrow, btnReturn;
 
     @Override
@@ -27,7 +28,6 @@ public class BorrowBookAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_book_admin);
 
-        tvaKey = findViewById(R.id.tvaKey);
         tvaTitle = findViewById(R.id.tvaTitle);
         tvaAuthor = findViewById(R.id.tvaAuthor);
         tvaYear = findViewById(R.id.tvaYear);
@@ -36,8 +36,13 @@ public class BorrowBookAdmin extends AppCompatActivity {
         btnBorrow = findViewById(R.id.btnBorrow);
         btnReturn = findViewById(R.id.btnReturn);
 
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Fetching book data");
+        dialog.setTitle("Loading");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         String resultID1 = getIntent().getExtras().getString("resultID");
-        tvaKey.setText(resultID1);
 
         FirebaseDatabase.getInstance()
                 .getReference("Book")
@@ -45,39 +50,45 @@ public class BorrowBookAdmin extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue() != null){
+                        dialog.dismiss();
+                        if (snapshot.getValue() != null) {
                             Book info = snapshot.getValue(Book.class);
                             tvaTitle.setText(info.getTitle());
                             tvaAuthor.setText(info.getAuthor());
                             tvaYear.setText(info.getYearPublished());
-                            if(info.isIs_available() == true){
+                            if (info.isIs_available() == true) {
                                 tvaAvail.setText("Available");
                                 btnReturn.setEnabled(false);
                                 btnBorrow.setEnabled(true);
-                            }
-                            else if(info.isIs_available() == false){
+                            } else if (info.isIs_available() == false) {
                                 tvaAvail.setText("Not Available");
                                 btnReturn.setEnabled(true);
                                 btnBorrow.setEnabled(false);
-                            }
-                            else if(resultID1 == null){
+                            } else if (resultID1 == null) {
                                 tvaAvail.setText("Book does not exist");
                                 btnReturn.setEnabled(false);
                                 btnBorrow.setEnabled(false);
                                 Toast.makeText(BorrowBookAdmin.this, "Book does not exist", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                                Intent intent = new Intent(BorrowBookAdmin.this, HomeAdmin.class);
                                 startActivity(intent);
                                 finish();
-                            }
-                            else{
+                            } else {
                                 tvaAvail.setText("Book does not exist");
                                 btnReturn.setEnabled(false);
                                 btnBorrow.setEnabled(false);
                                 Toast.makeText(BorrowBookAdmin.this, "Book does not exist", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                                Intent intent = new Intent(BorrowBookAdmin.this, HomeAdmin.class);
                                 startActivity(intent);
                                 finish();
                             }
+                        } else {
+                            tvaAvail.setText("Book does not exist");
+                            btnReturn.setEnabled(false);
+                            btnBorrow.setEnabled(false);
+                            Toast.makeText(BorrowBookAdmin.this, "Book does not exist", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
 
@@ -91,7 +102,7 @@ public class BorrowBookAdmin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //String resultID1 = getIntent().getExtras().getString("resultID");
-                Intent intent=new Intent(BorrowBookAdmin.this, QRScan.class);
+                Intent intent = new Intent(BorrowBookAdmin.this, QRScan.class);
                 intent.putExtra("classType", "BorrowBookAdmin");
                 intent.putExtra("resultID1", resultID1);
                 startActivity(intent);
@@ -106,8 +117,8 @@ public class BorrowBookAdmin extends AppCompatActivity {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("is_available", true);
 
-                daoBook.updateBorrow(resultID1, hashMap).addOnSuccessListener(suc ->{
-                    Intent intent=new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+                daoBook.updateBorrow(resultID1, hashMap).addOnSuccessListener(suc -> {
+                    Intent intent = new Intent(BorrowBookAdmin.this, HomeAdmin.class);
                     startActivity(intent);
                     finish();
                     Toast.makeText(BorrowBookAdmin.this, "Done", Toast.LENGTH_SHORT).show();
@@ -123,7 +134,7 @@ public class BorrowBookAdmin extends AppCompatActivity {
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot ds: snapshot.getChildren()){
+                                for (DataSnapshot ds : snapshot.getChildren()) {
                                     ds.getRef().removeValue();
                                 }
                             }
@@ -133,9 +144,15 @@ public class BorrowBookAdmin extends AppCompatActivity {
                                 Toast.makeText(BorrowBookAdmin.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(BorrowBookAdmin.this, HomeAdmin.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -26,7 +26,7 @@ public class BookLogStudent extends AppCompatActivity {
 
     // ADMIN BOOK LOGS
 
-    TextView bookStudentNum, bookIDcode, bkTitle, bkAuthor, bkYear, stdNum1, stdName1;
+    TextView bkTitle, bkAuthor, bkYear, stdNum1, stdName1;
     Button btnConfirmBorrow;
 
     RecyclerView recyclerView;
@@ -50,12 +50,6 @@ public class BookLogStudent extends AppCompatActivity {
         bkYear = findViewById(R.id.bkYear);
         stdName1 = findViewById(R.id.stdName);
         stdNum1 = findViewById(R.id.stdNum);
-
-        bookStudentNum = findViewById(R.id.bookStudentNum);
-        bookIDcode = findViewById(R.id.bookIDcode);
-
-        bookStudentNum.setText(resultID1);
-        bookIDcode.setText(bookID1);
 
         //ListView?
         mAuth = FirebaseAuth.getInstance();
@@ -133,7 +127,7 @@ public class BookLogStudent extends AppCompatActivity {
         btnConfirmBorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Transaction tran = new Transaction(bookIDcode.getText().toString(), bkTitle.getText().toString(), bkAuthor.getText().toString(), bkYear.getText().toString(), bookStudentNum.getText().toString(), stdNum1.getText().toString(), stdName1.getText().toString());
+                Transaction tran = new Transaction(bookID1, bkTitle.getText().toString(), bkAuthor.getText().toString(), bkYear.getText().toString(), resultID1, stdNum1.getText().toString(), stdName1.getText().toString());
 
                 dao.add(tran).addOnSuccessListener(suc -> {
                     sendUserToNextActivity();
