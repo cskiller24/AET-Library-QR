@@ -3,6 +3,7 @@ package com.example.aet_library_qr;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -14,19 +15,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class BookInfoStudent extends AppCompatActivity {
-    TextView textView3, infoTitle, infoAuthor, infoYearPub;
+    TextView infoTitle, infoAuthor, infoYearPub, infoStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info_student);
-        textView3 = findViewById(R.id.textView3);
         infoTitle = findViewById(R.id.infoTitle);
         infoAuthor = findViewById(R.id.infoAuthor);
         infoYearPub = findViewById(R.id.infoYearPub);
+        infoStatus = findViewById(R.id.infoStatus);
 
         String resultID1 = getIntent().getExtras().getString("resultID");
-        textView3.setText(resultID1);
+
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Fetching book data");
+        dialog.setTitle("Loading");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
 
         FirebaseDatabase.getInstance()
                 .getReference("Book")
@@ -34,14 +40,16 @@ public class BookInfoStudent extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        dialog.dismiss();
                         if (snapshot.getValue() != null) {
                             Book info = snapshot.getValue(Book.class);
                             infoTitle.setText(info.getTitle());
                             infoAuthor.setText(info.getAuthor());
                             infoYearPub.setText(info.getYearPublished());
+                            infoStatus.setText(info.isIs_available() ? "Available" : "Not Available");
                         } else {
                             Toast.makeText(BookInfoStudent.this, "Book does not exist", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(BookInfoStudent.this, HomeAdmin.class);
+                            Intent intent = new Intent(BookInfoStudent.this, HomeStudent.class);
                             startActivity(intent);
                             finish();
                         }

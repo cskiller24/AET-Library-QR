@@ -25,13 +25,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title: "
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/logBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                />
 
         </LinearLayout>
 
@@ -45,13 +47,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Author: "
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/logBookAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -65,13 +69,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Expire Date: "
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/logExpireDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

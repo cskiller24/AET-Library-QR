@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Generate QR Code"
-        android:textColor="@color/black"
+        android:text="Student QR Code"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/studentQrCodeImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/studentQrCodeImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
